@@ -23,12 +23,21 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - run: pwd
+    - run: ls
+  
+
+
     - name: Copy application.yml
       run: |
         echo "${{ secrets.APPLICATION_YML }}" >> application.yml
 
     - name: move backend dir
       run: cd backend
+
+    - run: pwd
+    - run: ls
+  
 
     - name: Build JAR with Gradle
       run: ./gradlew bootjar
