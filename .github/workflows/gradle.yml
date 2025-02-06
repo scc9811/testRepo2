@@ -23,28 +23,16 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    - run: pwd
-    - run: ls
-  
-
-
-    - name: Copy application.yml
-      run: |
-        echo "${{ secrets.APPLICATION_YML }}" >> application.yml
-
-    - name: move backend dir
-      run: cd backend
-
-    - run: pwd
-    - run: ls
-  
+    - name: Copy application.yml to backend
+      run: echo "${{ secrets.APPLICATION_YML }}" > backend/application.yml
 
     - name: Build JAR with Gradle
-      run: ./gradlew bootjar
+      run: ./gradlew bootJar
+      working-directory: backend
 
     - name: Build Docker Image
-      run: |
-        docker build -t onu:latest .
+      run: docker build -t onu:latest .
+      working-directory: backend
 
     - name: Login to DockerHub
       run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
@@ -53,20 +41,3 @@ jobs:
       run: |
         docker tag onu:latest ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: SSH into EC2 and Deploy
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          docker stop onu-container || true
-          docker rm onu-container || true
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
-          docker run -d --name onu-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
