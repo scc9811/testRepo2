@@ -27,6 +27,9 @@ jobs:
       run: |
         echo "${{ secrets.APPLICATION_YML }}" >> application.yml
 
+    - name: move backend dir
+      run: cd backend
+
     - name: Build JAR with Gradle
       run: ./gradlew bootjar
 
