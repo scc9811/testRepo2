@@ -25,7 +25,7 @@ jobs:
 
     - name: Copy application.yml
       run: |
-        echo "${{ secrets.APPLICATION_YML }}" >> src/main/resources/application.yml
+        echo "${{ secrets.APPLICATION_YML }}" >> application.yml
 
     - name: Build JAR with Gradle
       run: ./gradlew clean build
