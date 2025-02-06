@@ -28,19 +28,19 @@ jobs:
         echo "${{ secrets.APPLICATION_YML }}" >> application.yml
 
     - name: Build JAR with Gradle
-      run: ./gradlew clean build
+      run: ./gradlew bootjar
 
     - name: Build Docker Image
       run: |
-        docker build -t my-app:latest .
+        docker build -t onu:latest .
 
     - name: Login to DockerHub
       run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
     - name: Tag and Push Docker Image
       run: |
-        docker tag my-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+        docker tag onu:latest ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          docker stop my-app-container || true
-          docker rm my-app-container || true
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-          docker run -d --name my-app-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+          docker stop onu-container || true
+          docker rm onu-container || true
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
+          docker run -d --name onu-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
