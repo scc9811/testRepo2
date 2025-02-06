@@ -24,7 +24,7 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
 
     - name: Copy application.yml to backend
-      run: echo "${{ secrets.APPLICATION_YML }}" > backend/application.yml
+      run: echo "${{ secrets.APPLICATION_YML }}" > backend/resources/application.yml
 
     - name: Build JAR with Gradle
       run: ./gradlew bootJar
