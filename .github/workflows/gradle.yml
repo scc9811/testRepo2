@@ -58,7 +58,7 @@ jobs:
           docker stop onu-container || true
           docker rm onu-container || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
-          docker run --add-host host.docker.internal:host-gateway -p 8080:8080 --network host --name onu-container ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
+          docker run -d --add-host host.docker.internal:host-gateway -p 8080:8080 --network host --name onu-container ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
 
 
           
