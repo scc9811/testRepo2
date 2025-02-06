@@ -39,8 +39,9 @@ jobs:
 
     - name: Tag and Push Docker Image
       run: |
-        docker tag onu:latest ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
+        # docker tag onu:latest ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/onu:latest
+
 
   deploy:
     runs-on: ubuntu-latest
