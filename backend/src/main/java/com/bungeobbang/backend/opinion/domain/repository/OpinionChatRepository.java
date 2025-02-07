@@ -25,8 +25,6 @@ public interface OpinionChatRepository extends MongoRepository<OpinionChat, Stri
     List<Long> findDistinctOpinionIdByIsAdminTrue(List<Long> opinionIds);
 
 
-    Optional<OpinionChat> findTopByOpinionIdOrderByIdDesc(Long opinionId);
-
     // opinionId별 최신 채팅을 가져오는 쿼리
     @Aggregation(pipeline = {
             "{ $match: { opinionId: { $in: ?0 } } }",

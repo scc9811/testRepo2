@@ -72,6 +72,7 @@ public class AdminOpinionService {
 
         // <OpinionId, OpinionLastRead>
         // 마지막 읽은 채팅 조회
+        List<OpinionLastRead> list = opinionLastReadRepository.findByOpinionIdInAndIsAdmin(opinionIds, true);
         Map<Long, OpinionLastRead> lastReadMap = opinionLastReadRepository.findByOpinionIdInAndIsAdmin(opinionIds, true)
                 .stream()
                 .collect(Collectors.toMap(OpinionLastRead::getOpinionId, Function.identity()));

@@ -1,6 +1,5 @@
 package com.bungeobbang.backend.opinion.service;
 
-import com.bungeobbang.backend.auth.domain.Accessor;
 import com.bungeobbang.backend.common.exception.ErrorCode;
 import com.bungeobbang.backend.common.exception.MemberException;
 import com.bungeobbang.backend.common.exception.OpinionException;
@@ -13,7 +12,6 @@ import com.bungeobbang.backend.opinion.domain.repository.OpinionChatRepository;
 import com.bungeobbang.backend.opinion.domain.repository.OpinionLastReadRepository;
 import com.bungeobbang.backend.opinion.domain.repository.OpinionRepository;
 import com.bungeobbang.backend.opinion.dto.request.OpinionCreationRequest;
-import com.bungeobbang.backend.opinion.dto.response.AdminOpinionsInfoResponse;
 import com.bungeobbang.backend.opinion.dto.response.MemberOpinionsInfoResponse;
 import com.bungeobbang.backend.opinion.dto.response.OpinionCreationResponse;
 import com.bungeobbang.backend.opinion.dto.response.OpinionStatisticsResponse;

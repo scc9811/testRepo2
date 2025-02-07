@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface OpinionLastReadRepository extends MongoRepository<OpinionLastRead, String> {
 
-//    Optional<OpinionLastRead> findByOpinionIdAndIsAdmin(Long opinionId, boolean admin);
-
     // ✅ 여러 개의 opinionId를 한 번에 조회하는 쿼리
     List<OpinionLastRead> findByOpinionIdInAndIsAdmin(List<Long> opinionIds, boolean isAdmin);
 
